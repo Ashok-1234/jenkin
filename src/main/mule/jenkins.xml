@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="2de5da78-e471-4c8b-8c80-8ff0b64874d6" >
+		<http:listener-connection host="0.0.0.0" port="8083" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="b1fea449-f64a-4687-8a5e-4d163756ff94" >
+		<http:request-connection host="mu.mulesoft-training.com" port="80" />
+	</http:request-config>
+	<flow name="jenkinsFlow" doc:id="798a6520-6987-4a1f-9074-1996a8275217" >
+		<http:listener doc:name="Listener" doc:id="a8559a08-cc66-420c-af6b-d4ee69a6b9a1" config-ref="HTTP_Listener_config" path="/test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="08fced01-4a9f-4810-855f-bd5b68c3cb28" message="#[payload]"/>
+		<http:request method="GET" doc:name="Request" doc:id="a7f38608-f2b6-442c-a362-f2b08f8431da" config-ref="HTTP_Request_configuration" path="/essentials/united/flights"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="fd85f139-2a8b-46b2-91f1-2259323dbe2e" />
+	</flow>
+</mule>
